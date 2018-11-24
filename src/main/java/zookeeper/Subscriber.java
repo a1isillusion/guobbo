@@ -30,4 +30,8 @@ public void subscribe() {
      }
      logger.info("subscribe zookeeper node"+ip+":"+port+" success");
 }
+
+public static String discover(String service) {
+	return "localhost:14561";
+}
 }
