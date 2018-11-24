@@ -1,5 +1,6 @@
 package zookeeper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import org.I0Itec.zkclient.ZkClient;
@@ -11,27 +12,50 @@ public class Subscriber {
 public Logger logger=LoggerFactory.getLogger(Subscriber.class);
 public String ip;
 public int port;
+public static ZkClient zkClient;
 public static String path="/GuobboRegisty";
-public static HashMap<String, String> directory=new HashMap<String, String>();
+public static HashMap<String, ArrayList<String>> directory=new HashMap<String, ArrayList<String>>();
 
 public Subscriber(String ip,int port) {
 		this.ip=ip;
 		this.port=port;
+		if(zkClient==null) {
+			zkClient = new ZkClient(ip+":"+port,5000);
+		}
+		
 }
 
 public void subscribe() {
-	 ZkClient zkClient = new ZkClient(ip+":"+port,5000);
      logger.info("subscribe zookeeper node"+ip+":"+port+" begin");
      List<String>serviceList=zkClient.getChildren(path);
      for(String service:serviceList) {
-    	 String data=zkClient.readData(path+"/"+service);
-    	 System.out.println(service+data);
-    	 directory.put(service, data);
+    	 List<String> addressList=zkClient.getChildren(path+"/"+service);
+    	 for(String address:addressList) {
+    		 directoryPut(service, address);
+    	 }
      }
      logger.info("subscribe zookeeper node"+ip+":"+port+" success");
 }
 
-public static String discover(String service) {
-	return "localhost:14561";
+public void directoryPut(String service,String address) {
+	if(!directory.containsKey(service)) {
+		ArrayList<String> addressList=new ArrayList<String>();
+		addressList.add(address);
+		directory.put(service,addressList);
+	}else {
+		ArrayList<String>addressList=directory.get(service);
+		addressList.add(address);
+	}
 }
+public void directoryShow() {
+	for(String service:directory.keySet()) {
+		for(String address:directory.get(service)) {
+			System.out.println(service+"！"+address);
+		}
+	}
+}
+public static String discover(String service) {
+	return directory.get(service).get(0);
+}
+
 }

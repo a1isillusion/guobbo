@@ -3,6 +3,8 @@ package nullguo.guobbo;
 import java.lang.reflect.Method;
 import java.util.List;
 
+import org.I0Itec.zkclient.ZkClient;
+
 import netty.RPCClient;
 import pojo.RpcRequest;
 import pojo.RpcResponse;
@@ -23,18 +25,11 @@ public class App
 {
     public static void main( String[] args ) throws InterruptedException
     { 
-    AnnotationUtil.validAnnotation("util");
-    RpcRequest request=new RpcRequest();
-    request.setClassName(Testz.class.getName());
-    request.setMethodName("tiyubusima");
-    Method[] methods=Testz.class.getMethods();
-    Method method=null;
-    for(int i=0;i<methods.length;i++) {
-    	if(methods[i].getName().equals("tiyubusima"))method=methods[i];
-    }
-    request.setParameterTypes(method.getParameterTypes());
-    request.setParameters(new Object[] {3,2});
-    System.out.println(ReflectionUtil.JdkReflect(request).toString());
-
+     Registy registy=new Registy("111.230.100.33", 2181);
+     registy.registService("localhost:14561");
+     Thread.sleep(2000);
+     Subscriber subscriber=new Subscriber("111.230.100.33", 2181);
+     subscriber.subscribe();
+     subscriber.directoryShow();
     }
 }

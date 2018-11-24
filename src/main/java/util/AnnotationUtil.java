@@ -1,5 +1,6 @@
 package util;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,18 @@ import annotation.RpcService;
 
 public class AnnotationUtil {
 public static Map<String,Object> beanList=new HashMap<String,Object>();	
+public void scanAnootation() {
+	 beanList.clear();
+	 File f = new File(this.getClass().getResource("/").getPath());
+	 File [] fileList=f.listFiles();
+	 for(File file:fileList) {
+		 if(file.isDirectory()&&!file.getName().equals("META-INF")) {
+			  validAnnotation(file.getName());
+		 }
+	 }
+    
+}
 public static void validAnnotation(String packageName){
-	beanList.clear();
 	List<Class<?>> clsList = ClassUtil.getAllClassByPackageName(packageName);
 	for(Class<?> c:clsList) {
 		if(c.isAnnotationPresent(RpcService.class)) {
