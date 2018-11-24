@@ -25,7 +25,7 @@ public static void validAnnotation(String packageName){
 	for(Class<?> c:clsList) {
 		if(c.isAnnotationPresent(RpcService.class)) {
 			try {
-				beanList.put(c.getName(),c.newInstance());
+				beanList.put(c.getAnnotation(RpcService.class).value().getName(),c.newInstance());
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 

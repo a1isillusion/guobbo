@@ -1,7 +1,8 @@
 package pojo;
 
+import java.io.Serializable;
 
-public class RpcRequest {
+public class RpcRequest implements Serializable{
 public String requestId;
 public String className;
 public String methodName;

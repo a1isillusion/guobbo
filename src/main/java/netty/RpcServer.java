@@ -10,6 +10,7 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import pojo.RpcRequest;
 import pojo.RpcResponse;
+import util.ReflectionUtil;
 
 public class RpcServer extends ChannelInboundHandlerAdapter {
 	
@@ -40,9 +41,6 @@ public void bind(int port) {
 }
 @Override
 public void channelRead(ChannelHandlerContext ctx, Object requset) {
-	RpcResponse response=new RpcResponse();
-	response.setRequestId("tiyubusimama");
-	response.setResult("tiyubusb");
-	ctx.writeAndFlush(response);
+	ctx.writeAndFlush(ReflectionUtil.invoke((RpcRequest)requset));
 }
 }

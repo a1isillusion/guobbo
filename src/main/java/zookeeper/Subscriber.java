@@ -57,5 +57,7 @@ public void directoryShow() {
 public static String discover(String service) {
 	return directory.get(service).get(0);
 }
-
+public static boolean ifsubscribe() {
+	return !directory.isEmpty();
+}
 }
