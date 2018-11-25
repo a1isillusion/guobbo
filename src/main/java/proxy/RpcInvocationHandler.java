@@ -10,7 +10,6 @@ import zookeeper.Subscriber;
 public class RpcInvocationHandler implements InvocationHandler{
 	
 	public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-		System.out.println("调用:"+method.getDeclaringClass().getName()+":"+method.getName());
 		RpcRequest request =new RpcRequest();
 		request.setRequestId(UUID.randomUUID().toString());
 		request.setClassName(method.getDeclaringClass().getName());

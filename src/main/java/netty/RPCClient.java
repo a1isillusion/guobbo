@@ -1,6 +1,5 @@
 package netty;
 
-import com.alibaba.fastjson.JSON;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelHandlerContext;
@@ -56,15 +55,11 @@ public void invoke() {
 }
 @Override
 public void channelRead(ChannelHandlerContext ctx, Object response) {
-  System.out.println("收到"+response.toString());
   this.response=(RpcResponse)response;
   ctx.close();	
 }
 @Override    
 public void channelActive(ChannelHandlerContext ctx) throws Exception {    
-	System.out.println("active");
-	System.out.println(JSON.toJSONString(request));
     ctx.writeAndFlush(request); 
-    System.out.println("active");
 }  
 }
