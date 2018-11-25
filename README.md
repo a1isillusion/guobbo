@@ -1,5 +1,5 @@
 
-使用说明：
+轻量级Rpc框架guobbo使用说明：
 
 服务提供者调用：
 InitServer.init(zookeeperAddress,localAddress);  完成服务注册以及端口监听。
