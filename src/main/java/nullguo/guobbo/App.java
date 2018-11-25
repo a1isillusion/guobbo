@@ -33,7 +33,8 @@ public class App
      InitClient.init("111.230.100.33:2181");
      tiyubu tiyububean=RpcProxy.getInstance(tiyubu.class);
      System.out.println(tiyububean.tiyubusima(2, 4));
-
+     tiyubu tiyububean1=RpcProxy.getInstance(tiyubu.class);
+     System.out.println(tiyububean1.tiyubusima(3, 4));
     }
    
     

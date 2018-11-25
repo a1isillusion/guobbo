@@ -3,6 +3,8 @@ package zookeeper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+
 import org.I0Itec.zkclient.ZkClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +57,9 @@ public void directoryShow() {
 	}
 }
 public static String discover(String service) {
-	return directory.get(service).get(0);
+	ArrayList<String>addressList=directory.get(service);
+	Random random=new Random();
+	return addressList.get(random.nextInt()%addressList.size());
 }
 public static boolean ifsubscribe() {
 	return !directory.isEmpty();
